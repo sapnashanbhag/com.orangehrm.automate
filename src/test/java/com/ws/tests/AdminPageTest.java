@@ -19,6 +19,14 @@ public class AdminPageTest extends BaseTest {
     }
 
     @Test
+    public void clickUsersLink()
+    {
+        adminPage.clickUserManagementTab();
+        adminPage.clickUsersLink();
+        //Assert.assertTrue();
+    }
+
+    @Test
     public void adminPageShouldBeDisplayed() {
         Assert.assertTrue(adminPage.isAdminPageDisplayed(), "Admin page is not displayed");
         Assert.assertEquals(adminPage.getHeaderText(), "Admin", "Admin header mismatch");
@@ -41,7 +49,7 @@ public class AdminPageTest extends BaseTest {
     public void addNewUser() {
         adminPage.clickAddButton();
         Assert.assertTrue(adminPage.isAddUserFormDisplayed(), "Add User form is not displayed");
-        adminPage.fillAddUserForm("Admin", "Luke Ackerman", "james12345", "james12345", "james12345");
+        adminPage.fillAddUserForm("Admin", "Emily Brown", "james12345", "james12345", "james12345");
         adminPage.clickSaveButton();
         Assert.assertTrue(adminPage.isSuccessMessageDisplayed(), "Success message is not displayed after adding a new user");
     }

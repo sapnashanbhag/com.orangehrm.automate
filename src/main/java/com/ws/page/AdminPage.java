@@ -49,14 +49,29 @@ public class AdminPage {
     @FindBy(xpath = "//button[normalize-space()='Save']")
     private WebElement saveButton;
 
+    @FindBy(xpath = "//a[text()='Users']")
+    private WebElement usersLink;
+
+    @FindBy(xpath="(//span[@class='oxd-topbar-body-nav-tab-item'])[1]")
+    private WebElement userManagementTab;
+
     public AdminPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
+    public void clickUserManagementTab() {
+        userManagementTab.click();
+    }
+
+    public void clickUsersLink() {
+        usersLink.click();
+    }
     public String getHeaderText() {
         return adminHeader.getText();
     }
+
+
 
     public boolean isAdminPageDisplayed() {
         return adminHeader.isDisplayed() && userManagementHeader.isDisplayed();

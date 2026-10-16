@@ -29,6 +29,8 @@ public class LoginPage {
     @FindBy(xpath = "//img[@alt='company-branding']")
     private WebElement brandLogo;
 
+    @FindBy(xpath="//a[contains(text(),'OrangeHRM')]") private WebElement hrmLink;
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -76,5 +78,9 @@ public class LoginPage {
 
     public boolean isBrandLogoDisplayed() {
         return brandLogo.isDisplayed();
+    }
+
+    public void clickHRMLink(){
+        hrmLink.click();
     }
 }
