@@ -14,7 +14,7 @@ public class UserManagement_UsersPageTest extends BaseTest {
     private AdminPage adminPage;
     private UserMgmt_Users_Add userMgmt_Users_AddPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void openAdminPage() {
         loginPage.login("Admin", "admin123");
         leftNavigationMenuPage = new LeftNavigationMenuPage(driver);
@@ -31,7 +31,7 @@ public class UserManagement_UsersPageTest extends BaseTest {
 
     }
 
-    @Test
+    @Test(groups={"regression"})
    public void testSearchButton(){
         userManagement_UsersPage.clickSearchButton();
         Assert.assertTrue(userManagement_UsersPage.isSearchResultsDisplayed(), "Search results are not displayed after clicking the Search button");
@@ -48,7 +48,7 @@ public class UserManagement_UsersPageTest extends BaseTest {
     }
 
     //in belwo test we have to check for url and cannot check for save button visibility as it is not visible on the users page
-    @Test
+    @Test(groups={"regression"})
     public void testAddButton(){
         userManagement_UsersPage.clickAddButton();
         String url = driver.getCurrentUrl();

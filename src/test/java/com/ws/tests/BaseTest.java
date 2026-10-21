@@ -11,13 +11,13 @@ public class BaseTest {
    public WebDriver driver;
     public LoginPage loginPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
        driverScript = new DriverScript();
        driver = driverScript.launchBrowser();
        loginPage = new LoginPage(driver);
     }
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() throws InterruptedException {
         if (driver != null) {
             Thread.sleep(2000);

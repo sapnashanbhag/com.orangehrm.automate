@@ -1,11 +1,13 @@
 package com.ws.tests;
 
 import com.ws.page.*;
+import com.ws.utils.ExcelUtil;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class UserMgmt_Users_AddTest extends BaseTest {
@@ -16,7 +18,7 @@ public class UserMgmt_Users_AddTest extends BaseTest {
     private AdminPage adminPage;
     private UserMgmt_Users_Add userMgmt_Users_AddPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void openAdminPage() {
         loginPage.login("Admin", "admin123");
         leftNavigationMenuPage = new LeftNavigationMenuPage(driver);
@@ -33,15 +35,31 @@ public class UserMgmt_Users_AddTest extends BaseTest {
 
     }
 
-    @Test
-    public void addNewUser() {
+    @DataProvider(name = "userData")
+    public Object[][] userDataProvider() throws Exception {
+        String filePath = "./src/test/resources/testdata/data.xlsx";
+        String sheetName = "Sheet2";
+        ExcelUtil excelUtil = new ExcelUtil(filePath);
+        int rowCount = excelUtil.getRowCount(sheetName);
+        int columnCount = excelUtil.getColumnCount(sheetName, 0); // Assuming first row has all columns
+        Object[][] data = new Object[rowCount][columnCount];
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                data[i][j] = excelUtil.getCellData(sheetName, i, j);
+            }
+        }
+        return data;
+    }
+
+    @Test(groups={"regression"}, dataProvider = "userData")
+    public void addNewUser(String userRole, String employeeName, String username, String password, String confirmPassword) {
         adminPage.clickAddButton();
         Assert.assertTrue(adminPage.isAddUserFormDisplayed(), "Add User form is not displayed");
-        adminPage.fillAddUserForm("Admin", "Emily Jones", "james12345", "james12345", "james12345");
+        adminPage.fillAddUserForm(userRole, employeeName, username, password, confirmPassword);
         adminPage.clickSaveButton();
         Assert.assertTrue(adminPage.isSuccessMessageDisplayed(), "Success message is not displayed after adding a new user");
     }
-    @Test
+    @Test(groups={"regression"})
     public void testCancelButton() {
         userManagement_UsersPage.clickAddButton();
         userMgmt_Users_AddPage.clickCancelButton();

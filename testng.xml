@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true"
+          name="F:/SeleniumTraining/seleniumworkspace/com.orangehrm.automate/src/test">
+        <classes>
+            <class name="com.ws.tests.AdminPageTest">
+                <methods>
+                    <include name="clickUsersLink"/>
+                    <include name="adminPageShouldBeDisplayed"/>
+                    <include name="searchFormShouldBeDisplayed"/>
+                    <include name="searchUserByUsername"/>
+                    <include name="addNewUser"/>
+                    <include name="paginationShouldWork"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.Admin_JobPageTest">
+                <methods>
+                    <include name="testJobPageNavigation"/>
+                    <include name="testAddJobTitleButtonOpensForm"/>
+                    <include name="testSaveJobTitle"/>
+                    <include name="testCancelButtonOnJobTitleForm"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.Admin_Job_EmpStatusPageTest">
+                <methods>
+                    <include name="clickEmpStatusfromJobMenu"/>
+                    <include name="clickAddEmpStatus"/>
+                    <include name="EditEmpStatus"/>
+                    <include name="DeleteEmpStatus"/>
+                    <include name="Add_SaveEmpStatus"/>
+                    <include name="Add_CancelEmpStatus"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.DashboardPageTest">
+                <methods>
+                    <include name="dashboardPageShouldBeDisplayed"/>
+                    <include name="timeAtWorkWidgetShouldBeDisplayed"/>
+                    <include name="myActionsWidgetShouldBeDisplayed"/>
+                    <include name="quickLaunchWidgetShouldBeDisplayed"/>
+                    <include name="buzzLatestPostsWidgetShouldBeDisplayed"/>
+                    <include name="employeesOnLeaveTodayWidgetShouldBeDisplayed"/>
+                    <include name="employeeDistributionBySubUnitWidgetShouldBeDisplayed"/>
+                    <include name="employeeDistributionByLocationWidgetShouldBeDisplayed"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.LeftNavigationMenuPageTest">
+                <methods>
+                    <include name="collapseAndExpandLeftNavigationMenu"/>
+                    <include name="leftNavigationMenuShouldBeDisplayed"/>
+                    <include name="clickDashboardMenuItem"/>
+                    <include name="clickAdminMenuItem"/>
+                    <include name="clickPimMenuItem"/>
+                    <include name="clickLeaveMenuItem"/>
+                    <include name="clickTimeMenuItem"/>
+                    <include name="clickRecruitmentMenuItem"/>
+                    <include name="clickMyInfoMenuItem"/>
+                    <include name="clickPerformanceMenuItem"/>
+                    <include name="clickDirectoryMenuItem"/>
+                    <include name="clickMaintenanceMenuItem"/>
+                    <include name="clickClaimMenuItem"/>
+                    <include name="clickBuzzMenuItem"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.LoginPageTest">
+                <methods>
+                    <include name="loginWithInvalidCredentials"/>
+                    <include name="loginWithBlankUsernameAndPassword"/>
+                    <include name="brandLogoIsDisplayedOnLoginPage"/>
+                    <include name="clickHRMLink"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.ModulePagesTest">
+                <methods>
+                    <include name="adminPageShouldBeDisplayed"/>
+                    <include name="pimPageShouldBeDisplayed"/>
+                    <include name="leavePageShouldBeDisplayed"/>
+                    <include name="timePageShouldBeDisplayed"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.TestExcelUtil">
+                <methods>
+                    <include name="testReadExcel"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.UserManagement_UsersPageTest">
+                <methods>
+                    <include name="testResetButton"/>
+                    <include name="testDeleteButtonConfirmation"/>
+                    <include name="testDeleteButtonCancel"/>
+                    <include name="checkTableHeaderVisibility"/>
+                    <include name="checkClickHRMLink"/>
+                </methods>
+            </class>
+            <class name="com.ws.tests.UserMgmt_Users_AddTest">
+                <methods>
+                    <include name="checkValidationMessages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

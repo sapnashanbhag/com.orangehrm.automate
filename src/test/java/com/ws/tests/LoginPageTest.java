@@ -1,6 +1,8 @@
 package com.ws.tests;
 
+import com.ws.utils.ExcelUtil;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
@@ -8,7 +10,32 @@ import java.util.Set;
 
 public class LoginPageTest extends BaseTest {
 
-    @Test
+    @DataProvider(name = "loginData")
+    public Object[][] loginDataProvider() throws Exception {
+        String filePath = "./src/test/resources/testdata/data.xlsx";
+        String sheetName = "Sheet1";
+        ExcelUtil excelUtil = new ExcelUtil(filePath);
+        int rowCount = excelUtil.getRowCount(sheetName);
+        int columnCount = excelUtil.getColumnCount(sheetName, 0); // Assuming first row has all columns
+        Object[][] data = new Object[rowCount][columnCount];
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                data[i][j] = excelUtil.getCellData(sheetName, i, j);
+            }
+        }
+        return data;
+    }
+    @Test(groups={"regression"},dataProvider = "loginData")
+    public void loginWithValidCredentialsfromExcel(String username, String password) {
+        Assert.assertTrue(loginPage.isLoginPageDisplayed(), "Login page is not displayed");
+
+        loginPage.login(username, password);
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("/dashboard"), "Login was unsuccessful");
+    }
+
+
+    @Test(groups={"regression"})
     public void loginWithValidCredentials() {
         Assert.assertTrue(loginPage.isLoginPageDisplayed(), "Login page is not displayed");
 
