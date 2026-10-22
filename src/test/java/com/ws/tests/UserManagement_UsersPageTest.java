@@ -1,9 +1,11 @@
 package com.ws.tests;
 
 import com.ws.page.*;
+import com.ws.utils.ExcelUtil;
 import org.openqa.selenium.Alert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class UserManagement_UsersPageTest extends BaseTest {
@@ -59,19 +61,35 @@ public class UserManagement_UsersPageTest extends BaseTest {
     //This test implements dynamic deletion of user "cua_ess02" and checks if the record is deleted from the table. It also checks for the delete confirmation message.
     //The xpath is written in such a way that it will find the delete button for the user "cua_ess02" and click it. Then it will check if the delete confirmation message is displayed and click the confirmation button to delete the user.
     // Finally, it will check if the user "cua_ess02" is no longer displayed in the table.
-    @Test
-    public void testDeleteButtonConfirmation() throws InterruptedException {
-       userManagement_UsersPage.clickDeleteButton("cua_ess02");
+    @Test(groups={"regression"}, dataProvider = "deletionData")
+    public void testDeleteButtonConfirmation(String username) throws InterruptedException {
+       userManagement_UsersPage.clickDeleteButton(username);
        Assert.assertTrue(userManagement_UsersPage.isDeleteConfirmationDisplayed(), "Delete confirmation is not displayed after clicking the Delete button");
        userManagement_UsersPage.clickDeleteConfirmationButton();
-       userManagement_UsersPage.checkDeletedRecordNotDisplayed("cua_ess02");
+       userManagement_UsersPage.checkDeletedRecordNotDisplayed(username);
     }
-    @Test
-    public void testDeleteButtonCancel() throws InterruptedException {
-        userManagement_UsersPage.clickDeleteButton("cua_ess03");
+    @DataProvider(name = "deletionData")
+    public Object[][] userDataProvider() throws Exception {
+        String filePath = "./src/test/resources/testdata/data.xlsx";
+        String sheetName = "Sheet3";
+        ExcelUtil excelUtil = new ExcelUtil(filePath);
+        int rowCount = excelUtil.getRowCount(sheetName);
+        int columnCount = excelUtil.getColumnCount(sheetName, 0); // Assuming first row has all columns
+        Object[][] data = new Object[rowCount][columnCount];
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                data[i][j] = excelUtil.getCellData(sheetName, i, j);
+            }
+        }
+        return data;
+    }
+
+    @Test(groups={"regression"}, dataProvider = "deletionData")
+    public void testDeleteButtonCancel(String username) throws InterruptedException {
+        userManagement_UsersPage.clickDeleteButton(username);
         Assert.assertTrue(userManagement_UsersPage.isDeleteConfirmationDisplayed(), "Delete confirmation is not displayed after clicking the Delete button");
         userManagement_UsersPage.clickDeleteCancelButton();
-        Assert.assertTrue(userManagement_UsersPage.isUserDisplayed("cua_ess03"), "User should still be displayed after cancelling deletion");
+        Assert.assertTrue(userManagement_UsersPage.isUserDisplayed(username), "User should still be displayed after cancelling deletion");
     }
 
     @Test

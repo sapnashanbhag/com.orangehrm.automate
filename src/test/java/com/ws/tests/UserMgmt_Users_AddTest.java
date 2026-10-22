@@ -53,19 +53,29 @@ public class UserMgmt_Users_AddTest extends BaseTest {
 
     @Test(groups={"regression"}, dataProvider = "userData")
     public void addNewUser(String userRole, String employeeName, String username, String password, String confirmPassword) {
+        logger = extentReports.createTest("addNewUser", "Verify that a new user can be added successfully");
         adminPage.clickAddButton();
+        logger.pass("Clicked on Add button to navigate to Add User page");
         Assert.assertTrue(adminPage.isAddUserFormDisplayed(), "Add User form is not displayed");
+        logger.pass("Verified that the Add User form is displayed");
         adminPage.fillAddUserForm(userRole, employeeName, username, password, confirmPassword);
+        logger.pass("Filled in the Add User form with userRole: " + userRole + ", employeeName: " + employeeName + ", username: " + username);
         adminPage.clickSaveButton();
+        logger.pass("Clicked on Save button to add the new user");
         Assert.assertTrue(adminPage.isSuccessMessageDisplayed(), "Success message is not displayed after adding a new user");
+        logger.pass("Verified that the success message is displayed after adding a new user");
     }
     @Test(groups={"regression"})
     public void testCancelButton() {
+        logger=extentReports.createTest("testCancelButton", "Verify that clicking the Cancel button on the Add User page returns to the System Users page");
         userManagement_UsersPage.clickAddButton();
+        logger.pass("Clicked on Add button to navigate to Add User page");
         userMgmt_Users_AddPage.clickCancelButton();
+        logger.pass("Clicked on Cancel button to return to System Users page");
         String expectedPageHeader = "System Users";
         String actualPageHeader = userManagement_UsersPage.getPageHeaderText();
         Assert.assertEquals(actualPageHeader, expectedPageHeader, "Page header mismatch after clicking Cancel button");
+        logger.pass("Verified that the page header is 'System Users' after clicking Cancel button");
     }
     @Test
     public void checkValidationMessages(){
